@@ -14,7 +14,7 @@ public class TwoInOneNoSpaceDeserializer implements Deserializer {
     public List<Integer> deserialize(String input) {
         List<Integer> result = new ArrayList<>();
         for (int position = 0; position < input.length() - 1; position += 2) {
-            if ((byte)(input.charAt(position + 1)) > 2){
+            if (isStringContainsTwoNumbers(input, position)){
                 result.add((int)input.charAt(position));
                 result.add(128 - (byte)input.charAt(position + 1));
             } else {
@@ -22,5 +22,9 @@ public class TwoInOneNoSpaceDeserializer implements Deserializer {
             }
         }
         return result;
+    }
+
+    private static boolean isStringContainsTwoNumbers(String input, int position) {
+        return (byte) (input.charAt(position + 1)) > 2;
     }
 }
