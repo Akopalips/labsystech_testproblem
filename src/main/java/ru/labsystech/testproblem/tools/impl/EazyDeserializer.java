@@ -13,17 +13,17 @@ public class EazyDeserializer implements Deserializer {
     @Override
     public List<Integer> deserialize(String input) {
         List<Integer> result = new ArrayList<>();
-        for (String eachASCIIString : input.split(Character.toString(32))){
+        for (String eachASCIIString : input.split(Character.toString(0))) {
             result.add(ASCIIStringToInteger(eachASCIIString));
         }
         return result;
     }
 
-    protected int ASCIIStringToInteger(String input){
+    protected int ASCIIStringToInteger(String input) {
         int result = 0;
         byte pow = (byte) (input.length() - 1);
-        for (byte eachSymbol : input.getBytes()){
-            result += (eachSymbol < 33 ? eachSymbol : eachSymbol - 1) * Math.pow(127, pow--);
+        for (byte eachSymbol : input.getBytes()) {
+            result += (eachSymbol - 1) * Math.pow(127, pow--);
         }
         return result;
     }

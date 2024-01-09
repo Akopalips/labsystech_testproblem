@@ -12,7 +12,7 @@ import ru.labsystech.testproblem.tools.impl.EazySerializer;
  */
 public class Actions {
     public static void main(String... shit) {
-        Actions actions= new Actions();
+        Actions actions = new Actions();
         Serializer serializer = new EazySerializer();
         Deserializer deserializer = new EazyDeserializer();
 
