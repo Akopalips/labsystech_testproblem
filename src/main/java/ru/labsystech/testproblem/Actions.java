@@ -28,6 +28,7 @@ public class Actions {
         actions.commonTest(1, 9, 1000);
         actions.commonTest(1, 99, 1000);
         actions.commonTest(1, 300, 1000);
+
         List<Integer> customCollection = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 300; j++) {
@@ -35,13 +36,10 @@ public class Actions {
             }
         }
         actions.commonTest(customCollection, 1, 300, 900);
-        if (cmd.length > 2) {
-            System.out.println("Test with min %s max %s length %s: ".formatted(cmd[0], cmd[1], cmd[2])
-                                   + ((actions.detailedTest(createRandomCollection(
-                Integer.parseInt(cmd[0]), Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2])))) ? "success"
-                : "failed"));
-        }
+
+        actions.cmdTest(Integer.parseInt(cmd[0]), Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]));
     }
+
 
     private void commonTest(int minValue, int maxValue, int length) {
         commonTest(createRandomCollection(minValue, maxValue, length), minValue, maxValue, length);
@@ -63,7 +61,12 @@ public class Actions {
                                + (rawCollection.equals(deserializedString) ? "success" : "failed"));
     }
 
-    private boolean detailedTest(List<Integer> rawCollection) {
+    private void cmdTest(int minValue, int maxValue, int length) {
+        List<Integer> rawCollection = createRandomCollection(minValue, maxValue, length);
+        if (length < 3) {
+            return;
+        }
+
         int rawCollectionLength = integerCollectionLength(rawCollection);
         System.out.println("Collection of integers: " + rawCollection + " with length " + rawCollectionLength);
         String serializedCollection = serializer.serialize(rawCollection);
@@ -73,7 +76,8 @@ public class Actions {
         List<Integer> deserializedString = deserializer.deserialize(serializedCollection);
         System.out.println("Deserialized string: " + deserializedString + " with length " + integerCollectionLength(
             deserializedString));
-        return rawCollection.equals(deserializedString);
+        System.out.println("Test with min %s max %s length %s: ".formatted(minValue, maxValue, length)
+                               + (rawCollection.equals(deserializedString) ? "success" : "failed"));
     }
 
     private static int integerCollectionLength(List<Integer> testCollection) {
