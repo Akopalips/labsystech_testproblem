@@ -7,6 +7,5 @@ import java.util.List;
  */
 public interface Serializer {
 
-    String serialize(List<Integer> input) ;
-
+    String serialize(List<Integer> input);
 }

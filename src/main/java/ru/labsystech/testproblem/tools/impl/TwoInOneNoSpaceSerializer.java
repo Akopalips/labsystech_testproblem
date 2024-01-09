@@ -20,19 +20,21 @@ public class TwoInOneNoSpaceSerializer implements Serializer {
                 appendTwoSmallNumbersAsOne(input, result, (char) currentNumber, position);
                 position++;
             } else {
-                result.append((char) (byte)(currentNumber % 128))
-                    .append((char) (byte)(currentNumber / 128));
+                result.append((char) (byte) (currentNumber % 128))
+                    .append((char) (byte) (currentNumber / 128));
             }
         }
         return result.toString();
     }
 
-    private static void appendTwoSmallNumbersAsOne(List<Integer> input, StringBuilder result, char currentNumber, int position) {
+    private static void appendTwoSmallNumbersAsOne(List<Integer> input, StringBuilder result, char currentNumber,
+                                                   int position) {
         int nextNumber = input.get(position + 1);
         result.append(currentNumber).append((char) (128 - nextNumber));
     }
 
-    private static boolean isPossibleToCompressTwoInOne(List<Integer> input, int inputSize, int currentNumber, int position) {
+    private static boolean isPossibleToCompressTwoInOne(List<Integer> input, int inputSize, int currentNumber,
+                                                        int position) {
         return position < inputSize - 1 &&
             currentNumber < 128 && (input.get(position + 1)) < 125;
     }
